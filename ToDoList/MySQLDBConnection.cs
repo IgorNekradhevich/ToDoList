@@ -19,6 +19,7 @@ namespace ToDoList
 
         public void Dispose()
         {
+            
             Connection.Close();
         }
     }

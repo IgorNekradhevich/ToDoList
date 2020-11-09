@@ -17,14 +17,25 @@ namespace ToDoList
         {
             InitializeComponent();
         }
+
         MySQLConnectionString connStr; 
         MySQLDBConnection mySQLDB;
         SELECT select;
+
         private void AcceptButton_Click(object sender, EventArgs e)
         {
             select.Select(User.TableName, "user = '" + TBName.Text + "' and pass ='" + TBPass.Text + "'");
-            User loginUser = new User( select.TableToList(0));
-            MessageBox.Show(loginUser.Id);
+            if (select.TableToList(0) != null)
+            {
+                User loginUser = new User(select.TableToList(0));
+                ToDo toDo = new ToDo(loginUser.Id);
+                toDo.Show();
+                Hide();
+            }
+            else
+            {
+                MessageBox.Show("Не правильное имя пользователя или пароль.");
+            }
         }
 
         private void Login_Load(object sender, EventArgs e)
@@ -32,6 +43,9 @@ namespace ToDoList
             connStr = new MySQLConnectionString("localhost", "root", "root", "testDb");
             mySQLDB = new MySQLDBConnection(connStr);
             select = new SELECT(mySQLDB);
+           /* User test = new User("test", "test", "2020-01-01");
+            INSERT insert = new INSERT(mySQLDB);
+            insert.Insert(test);*/
         }
 
         //private void button1_Click(object sender, EventArgs e)

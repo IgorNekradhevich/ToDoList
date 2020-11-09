@@ -22,6 +22,7 @@ namespace ToDoList
             _pass = Password;
             _port = Port;
             _dataBase = DBName;
+           
         }
 
         public MySQLConnectionString(string Server, string User, string Password,

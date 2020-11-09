@@ -6,15 +6,35 @@ using System.Threading.Tasks;
 
 namespace ToDoList
 {
-    class User
+    class User : ITable
     {
         public string Id { get; private set; }
         public string UserName { get;  set; }
         public string Pass { private get;  set; }
         public string Date { get;  set; }
         static public  string TableName = "logins";
-        public List<string> ColumnNames { get; private set; }
+        private List<string> ColumnNames;
 
+        public List<string> GetColumnNames()
+        {
+            return ColumnNames;
+        }
+        public string GetTableName()
+        {
+            return TableName;
+        }
+
+        public List<string> GetData()
+        {
+            List<string> userData = new List<string>();
+            if (Id == null)
+                Id = "NULL";
+            userData.Add(Id);
+            userData.Add(UserName);
+            userData.Add(Pass);
+            userData.Add(Date);
+            return userData;
+        }
         private void SetColumnNames()
         {
             ColumnNames = new List<string>();
@@ -33,10 +53,10 @@ namespace ToDoList
 
         public User(List<string> UserData) 
         {
-            getDataFromList(UserData);
+            GetDataFromList(UserData);
             SetColumnNames(); 
         }
-        public void getDataFromList(List<string> UserData)
+        public void GetDataFromList(List<string> UserData)
         {
             UserName = UserData[1];
             Pass = UserData[2];
